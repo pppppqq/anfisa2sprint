@@ -66,6 +66,7 @@ class IceCream(PublishedModel):
         verbose_name='Название'
         )
     description = models.TextField(verbose_name='Описание')
+    price = models.DecimalField(max_digits=5, decimal_places=2)
     wrapper = models.OneToOneField(
         Wrapper,
         on_delete=models.SET_NULL,
@@ -80,8 +81,14 @@ class IceCream(PublishedModel):
         related_name='ice_creams',
         verbose_name='Категория'
     )
+    output_order = models.PositiveSmallIntegerField(
+        default=100,
+        verbose_name='Порядок отображения'
+        )
     toppings = models.ManyToManyField(Topping, verbose_name='Топпинги')
     is_on_main = models.BooleanField(default=False, verbose_name='На главную')
+
+    ordering = ('output_order', 'title')
 
     class Meta:
         verbose_name = 'Мороженое'
